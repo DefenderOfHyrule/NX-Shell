@@ -49,10 +49,10 @@ OUT_SHADERS	:=	shaders
 
 VERSION_MAJOR	:=	4
 VERSION_MINOR	:=	0
-VERSION_MICRO	:=	1
+VERSION_MICRO	:=	2
 
 APP_TITLE	:=	NX-Shell
-APP_AUTHOR	:=	Joel16
+APP_AUTHOR	:=	DefenderOfHyrule
 APP_VERSION	:=	${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_MICRO}
 
 EXT_LIBS	:=	$(CURDIR)/libs
@@ -64,8 +64,8 @@ ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
 CFLAGS	:=	-g -Wall -O3 -ffunction-sections -Wno-restrict $(ARCH) $(DEFINES)
 
+CFLAGS += -I$(PORTLIBS)/include/freetype2
 CFLAGS	+=	$(INCLUDE) -D__SWITCH__
-CFLAGS	+=	`freetype-config --cflags`
 CFLAGS	+=	-DVERSION_MAJOR=$(VERSION_MAJOR) -DVERSION_MINOR=$(VERSION_MINOR) -DVERSION_MICRO=$(VERSION_MICRO)
 CFLAGS  +=	-DIMGUI_IMPL_OPENGL_LOADER_GLAD -DIMGUI_DISABLE_OBSOLETE_FUNCTIONS -DIMGUI_DISABLE_DEMO_WINDOWS
 CFLAGS  +=	-DIMGUI_DISABLE_DEBUG_TOOLS -DIMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCTIONS
@@ -77,7 +77,7 @@ CXXFLAGS	:= $(CFLAGS) -std=gnu++20 -fno-exceptions -fno-rtti
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:=	`curl-config --libs` `freetype-config --libs` -lgif -lturbojpeg -ljpeg -lpng -lwebp -ljansson \
+LIBS	:=	`curl-config --libs` -lfreetype -lharfbuzz -lbz2 -lgif -lturbojpeg -ljpeg -lpng -lwebp -ljansson \
 		-lglad -lEGL -lglapi -ldrm_nouveau -lusbhsfs -llwext4 -lntfs-3g -lnx -lm -lz
 
 #---------------------------------------------------------------------------------
